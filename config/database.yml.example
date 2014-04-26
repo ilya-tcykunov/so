@@ -1,0 +1,37 @@
+<%
+  branch = `git symbolic-ref HEAD 2>/dev/null`.chomp.sub('refs/heads/', '')
+  suffix = `git config --bool branch.#{branch}.database`.chomp == 'true' ? "_#{branch}" : ""
+%>
+
+development:
+  adapter: postgresql
+  database: so<%= suffix %>
+  host: localhost
+  port: 5432
+  encoding: utf-8
+  username: so
+  password: so
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: so_test
+  host: localhost
+  port: 5432
+  encoding: utf-8
+  username: tester
+  password: tester
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  database: so<%= suffix %>
+  host: localhost
+  port: 5432
+  encoding: utf-8
+  username: so
+  password: so
+  pool: 5
+  timeout: 5000
