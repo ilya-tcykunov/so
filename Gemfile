@@ -35,3 +35,11 @@ gem 'bootstrap-generators', '~> 3.1.1'
 gem 'haml-rails'
 gem 'font-awesome-sass'
 gem 'will_paginate-bootstrap'
+
+# Testing
+group :development, :test do
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails', '~> 2.0'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+end
