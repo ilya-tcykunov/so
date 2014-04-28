@@ -31,4 +31,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # Bootstrap
-gem 'bootstrap-sass', '~> 3.1.1'
+gem 'bootstrap-generators', '~> 3.1.1'
+gem 'haml-rails'
+gem 'font-awesome-sass'
+gem 'will_paginate-bootstrap'
