@@ -50,5 +50,7 @@ RSpec.configure do |config|
     ensure
       DatabaseCleaner.clean
     end
+
+    config.include Devise::TestHelpers, type: :controller
   end
 end
