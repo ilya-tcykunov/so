@@ -21,7 +21,7 @@ gem 'therubyracer',  platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+# Build JSON APIs with ease. Read mamore: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 gem 'devise'
