@@ -40,7 +40,7 @@ gem 'will_paginate-bootstrap'
 group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 2.0'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
