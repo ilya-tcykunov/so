@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :question do
-    title "MyText"
-    body "MyText"
+    title "MyTitle"
+    body "MyBody"
     user nil
   end
 end
