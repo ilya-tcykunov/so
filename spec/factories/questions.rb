@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :question do
     title "MyTitle"
     body "MyBody"
-    user nil
+    user
   end
 end
