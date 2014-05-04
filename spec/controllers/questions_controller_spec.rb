@@ -35,4 +35,54 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'GET #show' do
+    let(:question){create(:question)}
+
+    context 'when user is not signed in' do
+      before :each do
+        get :show, id: question
+      end
+
+      it 'has @question variable' do
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'renders show template' do
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context 'when user signed in' do
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in create(:user)
+      end
+
+      it 'has not access to show action' do
+        expect {
+          get :show, id: question
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'when user is admin' do
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:admin]
+        sign_in create(:admin)
+      end
+
+      before :each do
+        get :show, id: question
+      end
+
+      it 'has @question variable' do
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'renders show template' do
+        expect(response).to render_template(:show)
+      end
+    end
+  end
 end
