@@ -6,7 +6,7 @@ describe QuestionsController do
   describe 'GET #index' do
     let(:questions){create_list(:question, 2)}
 
-    before :each
+    before :each do
       get :index
     end
 
