@@ -57,22 +57,6 @@ describe QuestionsController do
       before :each do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         sign_in create(:user)
-      end
-
-      it 'has not access to show action' do
-        expect {
-          get :show, id: question
-        }.to raise_error(CanCan::AccessDenied)
-      end
-    end
-
-    context 'when user is admin' do
-      before :each do
-        @request.env['devise.mapping'] = Devise.mappings[:admin]
-        sign_in create(:admin)
-      end
-
-      before :each do
         get :show, id: question
       end
 

@@ -40,6 +40,7 @@ class Ability
     end
 
     # Ordinary user
-    can [:index, :edit, :new, :create, :edit, :update], Question
+    can :manage, Question
+    cannot :destroy, Question
   end
 end
