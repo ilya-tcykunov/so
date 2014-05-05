@@ -182,4 +182,81 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    context 'when user is not signed in' do
+      it 'can not update questions' do
+        expect {
+          patch :update, id: create(:question), question: {}
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'when user is signed in' do
+      let(:user) {create(:user)}
+      let(:his_question) {create(:question, user: user)}
+      let(:anothers_question) {create(:question)}
+
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in user
+      end
+
+      context "when updating another's question" do
+        it 'has not access' do
+          expect{
+            patch :update, id: anothers_question, question: {}
+          }.to raise_error(CanCan::AccessDenied)
+        end
+      end
+
+      context 'when updating his question' do
+        context 'with valid data' do
+          let(:valid_new_title){'agqverbjqhbfedvkjuabevruiaervubavadrfva'}
+          let(:valid_new_body){'sdfyuasbdfvkabdrfvabvk bakjlrblquerbva8745gq8'}
+
+          before :each do
+            patch :update, id: his_question, question: {title: valid_new_title, body: valid_new_body}
+          end
+
+          it 'has correct @question variable' do
+            expect(assigns(:question).id).to eq his_question.id
+          end
+
+          it 'changes attributes' do
+            his_question.reload
+            expect(his_question.title).to eq valid_new_title
+            expect(his_question.body).to eq valid_new_body
+          end
+
+          it 'redirects to the question' do
+            expect(response).to redirect_to his_question
+          end
+        end
+
+        context 'with invalid data' do
+          let(:invalid_new_title){''}
+          let(:invalid_new_body){''}
+
+          before :each do
+            patch :update, id: his_question, question: {title: invalid_new_title, body: invalid_new_body}
+          end
+
+          it 'has correct @question variable' do
+            expect(assigns(:question).id).to eq his_question.id
+          end
+
+          it 'does not change attributes' do
+            his_question.reload
+            expect(his_question.title).not_to eq invalid_new_title
+            expect(his_question.body).not_to eq invalid_new_body
+          end
+
+          it 'renders edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+    end
+  end
 end
