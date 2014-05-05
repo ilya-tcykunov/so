@@ -95,4 +95,47 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'GET #edit' do
+    context 'when user is not signed in' do
+      it 'can not edit questions' do
+        expect {
+          get :edit, id: create(:question)
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'when user is signed in' do
+      let(:user) {create(:user)}
+      let(:his_question) {create(:question, user: user)}
+      let(:anothers_question) {create(:question)}
+
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in user
+      end
+
+      context "when editing another's question" do
+        it 'has not access' do
+          expect{
+            get :edit, id: anothers_question
+          }.to raise_error(CanCan::AccessDenied)
+        end
+      end
+
+      context 'when editing his question' do
+        before :each do
+          get :edit, id: his_question
+        end
+
+        it 'has correct @question' do
+          expect(assigns(:question)).to eq his_question
+        end
+
+        it 'renders edit template' do
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+  end
 end
