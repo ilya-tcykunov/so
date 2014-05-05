@@ -12,4 +12,19 @@ class QuestionsController < ApplicationController
 
   def edit
   end
+
+  def create
+    @question.user = current_user
+    if @question.save
+      redirect_to @question
+    else
+      render 'new'
+    end
+  end
+
+  private
+
+  def question_params
+    params.require(:question).permit(:title, :body)
+  end
 end

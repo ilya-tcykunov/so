@@ -138,4 +138,48 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'POST #create' do
+    context 'when user is not signed in' do
+      it 'can not edit questions' do
+        expect {
+          get :edit, id: create(:question)
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'when user is signed in' do
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in create(:user)
+      end
+
+      context "with valid attributes" do
+        it 'saves new question to database' do
+          expect{post :create, question: attributes_for(:question)}.to change(Question, :count).by(1)
+        end
+
+        it 'set correct user to created question' do
+          post :create, question: attributes_for(:question)
+          expect(Question.last.user).to eq subject.current_user
+        end
+
+        it 'redirects to show' do
+          post :create, question: attributes_for(:question)
+          expect(response).to redirect_to question_path(assigns(:question))
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not save new question to database' do
+          expect{post :create, question: attributes_for(:question_empty_title)}.not_to change(Question, :count)
+        end
+
+        it 're-renders new template' do
+          post :create, question: attributes_for(:question_empty_title)
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
 end

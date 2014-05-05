@@ -6,4 +6,10 @@ FactoryGirl.define do
     body "MyBody"
     user
   end
+
+  factory :question_empty_title, class: 'Question' do
+    title ''
+    body ''
+    user
+  end
 end
