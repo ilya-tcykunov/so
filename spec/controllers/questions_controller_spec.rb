@@ -69,4 +69,30 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'GET #new' do
+    context 'when user is not signed in' do
+      it 'can not create questions' do
+        expect {
+          get :new
+        }.to raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'when user is not signed in' do
+      before :each do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in create(:user)
+        get :new
+      end
+
+      it 'has @question variable' do
+        expect(assigns(:question)).not_to be_nil
+      end
+
+      it 'renders new template' do
+        expect(response).to render_template(:new)
+      end
+    end
+  end
 end
