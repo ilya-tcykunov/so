@@ -79,7 +79,7 @@ describe QuestionsController do
       end
     end
 
-    context 'when user is not signed in' do
+    context 'when user signed in' do
       before :each do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         sign_in create(:user)
