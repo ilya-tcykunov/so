@@ -73,9 +73,8 @@ describe QuestionsController do
   describe 'GET #new' do
     context 'when user is not signed in' do
       it 'can not create questions' do
-        expect {
-          get :new
-        }.to raise_error(CanCan::AccessDenied)
+        get :new
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
@@ -99,9 +98,8 @@ describe QuestionsController do
   describe 'GET #edit' do
     context 'when user is not signed in' do
       it 'can not edit questions' do
-        expect {
-          get :edit, id: create(:question)
-        }.to raise_error(CanCan::AccessDenied)
+        get :edit, id: create(:question)
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
@@ -142,9 +140,8 @@ describe QuestionsController do
   describe 'POST #create' do
     context 'when user is not signed in' do
       it 'can not edit questions' do
-        expect {
-          get :edit, id: create(:question)
-        }.to raise_error(CanCan::AccessDenied)
+        get :edit, id: create(:question)
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
@@ -186,9 +183,8 @@ describe QuestionsController do
   describe 'PATCH #update' do
     context 'when user is not signed in' do
       it 'can not update questions' do
-        expect {
-          patch :update, id: create(:question), question: {}
-        }.to raise_error(CanCan::AccessDenied)
+        patch :update, id: create(:question), question: {}
+        expect(response).to redirect_to new_user_session_path
       end
     end
 

@@ -43,6 +43,8 @@ group :development, :test do
   gem 'shoulda-matchers', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 gem 'devise'

@@ -27,8 +27,7 @@
 
         #menu.collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li.active
-              %a{href:'#'} Menu Item
+            %li= link_to 'Ask question', new_question_path
 
           - if user_signed_in?
             %ul.nav.navbar-nav.navbar-right

@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   def index
@@ -16,6 +17,7 @@ class QuestionsController < ApplicationController
   def create
     @question.user = current_user
     if @question.save
+      flash[:notice] = 'Question successfully created'
       redirect_to @question
     else
       render 'new'
@@ -24,6 +26,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
+      flash[:notice] = 'Question successfully updated'
       redirect_to @question
     else
       render 'edit'
