@@ -51,12 +51,18 @@ describe QuestionsController do
       it 'renders show template' do
         expect(response).to render_template(:show)
       end
+
+      it 'has not @answer variable' do
+        expect(assigns(:answer)).to be_nil
+      end
     end
 
     context 'when user signed in' do
+      let(:user){create(:user)}
+
       before :each do
         @request.env['devise.mapping'] = Devise.mappings[:user]
-        sign_in create(:user)
+        sign_in user
         get :show, id: question
       end
 
@@ -66,6 +72,10 @@ describe QuestionsController do
 
       it 'renders show template' do
         expect(response).to render_template(:show)
+      end
+
+      it 'it has correct @answer variable' do
+        expect(assigns(:answer)).to be_a_new(Answer)
       end
     end
   end
@@ -140,7 +150,7 @@ describe QuestionsController do
   describe 'POST #create' do
     context 'when user is not signed in' do
       it 'can not edit questions' do
-        get :edit, id: create(:question)
+        post :create, question: attributes_for(:question)
         expect(response).to redirect_to new_user_session_path
       end
     end
