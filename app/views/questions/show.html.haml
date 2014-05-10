@@ -4,11 +4,10 @@
 
   %h2= "Answers (#{@question.answers.count})"
   .answers-container{data: {answers_container: ''}}
-    - @question.answers.each do |answer|
-      %p= answer.body
+    = render partial: 'answer_list', locals: {question: @question}
 
   %h2= "Your answer"
-  = form_for [@question, @answer], html: {role: 'form', class: 'form-horizontal'} do |f|
+  = form_for [@question, @answer], html: {role: 'form', class: 'form-horizontal'}, remote: true do |f|
     .form-group
       = f.text_area :body, class: 'form-control'
 
