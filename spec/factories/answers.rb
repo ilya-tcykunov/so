@@ -2,9 +2,12 @@
 
 FactoryGirl.define do
   factory :answer do
-    body ""
-    question ""
-    user "MyString"
-    reference "MyString"
+    body "answer's body"
+    question
+    user
+  end
+
+  factory :answer_empty_body, class: 'Answer' do
+    body ''
   end
 end

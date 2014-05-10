@@ -42,5 +42,6 @@ class Ability
     # Ordinary user
     can [:index, :show, :new, :create], Question
     can [:edit, :update], Question, user_id: user.id
+    can [:new, :create], Answer
   end
 end
