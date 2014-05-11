@@ -8,6 +8,8 @@
 
   %h2= "Your answer"
   = form_for [@question, @answer], html: {role: 'form', class: 'form-horizontal'}, remote: true do |f|
+    .error-messages
+
     .form-group
       = f.text_area :body, class: 'form-control'
 

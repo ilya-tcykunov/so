@@ -9,7 +9,7 @@ feature 'User answer', %q{
 } do
   given(:question){create(:question)}
 
-  scenario 'Authenticated user creates answer', js: true do
+  scenario 'Authenticated user creates valid answer', js: true do
     login_as(create(:user), scope: :user)
     visit question_path(question)
 
@@ -21,6 +21,21 @@ feature 'User answer', %q{
     expect(current_path).to eq question_path(question)
     within('[data-answers-container]') do
       expect(page).to have_content 'my answer'
+    end
+  end
+
+  scenario 'Authenticated user creates invalid answer', js: true do
+    login_as(create(:user), scope: :user)
+    visit question_path(question)
+
+    within('#new_answer') do
+      fill_in 'answer_body', with: ''
+      click_on 'Create Answer'
+    end
+
+    expect(current_path).to eq question_path(question)
+    within('.error-messages') do
+      expect(page).to have_content "Body can't be blank"
     end
   end
 end

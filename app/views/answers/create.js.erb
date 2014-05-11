@@ -1,2 +1,7 @@
-$("[data-answers-container]").html('<%= j render partial: 'questions/answer_list', locals: {question: @question} %>');
-$('#answer_body').val('');
+<% if @answer.new_record? %>
+    $('.error-messages', '#new_answer').html('<%= j render partial: 'common/error_messages', locals: {model: @answer} %>');
+<% else %>
+    $('.error-messages', '#new_answer').children().remove();
+    $("[data-answers-container]").html('<%= j render partial: 'questions/answer_list', locals: {question: @question} %>');
+    $('#answer_body').val('');
+<% end %>

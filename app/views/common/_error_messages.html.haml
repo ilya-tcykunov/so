@@ -1,0 +1,6 @@
+- if model.errors.present?
+  .alert.alert-danger
+    %button.close{data: {dismiss: 'alert'}, area_hidden: 'true'} &times;
+    %ul
+      - model.errors.full_messages.each do |msg|
+        %li= msg
