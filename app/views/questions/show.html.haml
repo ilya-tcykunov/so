@@ -2,7 +2,11 @@
   %h2= @question.title
   %p= @question.body
 
-  %h2= "Answers (#{@question.answers.count})"
+  %h2
+    Answers (
+    %span{data: {answers_count: ''}}= @question.answers.count
+    )
+
   .answers-container{data: {answers_container: ''}}
     = render partial: 'answer_list', locals: {question: @question}
 
