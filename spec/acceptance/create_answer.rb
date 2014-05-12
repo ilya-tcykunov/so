@@ -9,6 +9,12 @@ feature 'User answer', %q{
 } do
   given(:question){create(:question)}
 
+  scenario 'Unauthorized user wants to create answer' do
+    visit question_path(question)
+    expect(page).not_to have_selector('#new_answer')
+    expect(page).to have_content('You should sign in to answer')
+  end
+
   scenario 'Authenticated user creates valid answer', js: true do
     login_as(create(:user), scope: :user)
     visit question_path(question)
