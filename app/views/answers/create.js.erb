@@ -4,5 +4,5 @@
     $('.error-messages', '#new_answer').children().remove();
     $("[data-answers-container]").html('<%= j render partial: 'questions/answer_list', locals: {question: @question} %>');
     $("[data-answers-count]").html('<%= @question.answers.count %>');
-    $('#answer_body').val('');
+    $('#answer_body', '#new_answer').val('');
 <% end %>

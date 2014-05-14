@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 
   def show
     if can? :new, Answer
-      @answer = @question.answers.build
+      @answer = Answer.new
     end
   end
 

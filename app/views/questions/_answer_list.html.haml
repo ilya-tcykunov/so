@@ -1,2 +1,15 @@
 - question.answers.each do |answer|
-  %p= answer.body
+  %div{id: "answer_#{answer.id}"}
+    %p= answer.body
+
+    - if can? :edit, answer
+      = button_tag 'Edit', type: 'button', data: {answer_edit_button: true, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
+
+      = form_for [question, answer], html: {role: 'form', class: 'form-horizontal', style: 'display:none;'}, remote: true do |f|
+        .error-messages
+
+        .form-group
+          = f.text_area :body, class: 'form-control', value: answer.body
+
+        .form-group
+          = f.submit class: 'btn btn-primary'
