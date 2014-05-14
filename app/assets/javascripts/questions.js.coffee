@@ -6,7 +6,7 @@ $(->
   initAnswerEditForms()
 
 initAnswerEditForms = ->
-  $('[data-answer-edit-button]').click( (event)->
+  $('[data-answers-container]').on('click', '[data-answer-edit-button-for-id]', (event)->
     $this = $(this)
 
     if $this.text() == $this.attr('data-edit-value')
