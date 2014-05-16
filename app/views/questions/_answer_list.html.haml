@@ -1,11 +1,11 @@
 - question.answers.each do |answer|
   %div{id: "answer_#{answer.id}"}
-    %p= answer.body
+    %p{data: {answer_text_for_id: answer.id}}= answer.body
 
     - if can? :edit, answer
-      = button_tag 'Edit', type: 'button', data: {answer_edit_button: true, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
+      = button_tag 'Edit', type: 'button', data: {answer_edit_button_for_id: answer.id, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
 
-      = form_for [question, answer], html: {role: 'form', class: 'form-horizontal', style: 'display:none;'}, remote: true do |f|
+      = form_for [question, answer], html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {answer_edit_form_for_id: answer.id}}, remote: true do |f|
         .error-messages
 
         .form-group

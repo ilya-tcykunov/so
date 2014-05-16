@@ -43,5 +43,6 @@ class Ability
     can [:index, :show, :new, :create], Question
     can [:edit, :update], Question, user_id: user.id
     can [:new, :create], Answer
+    can [:edit, :update], Answer, user_id: user.id
   end
 end
