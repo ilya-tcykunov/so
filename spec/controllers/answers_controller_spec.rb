@@ -7,6 +7,11 @@ describe AnswersController do
         post :create, answer: attributes_for(:answer), question_id: create(:question)
         expect(response).to redirect_to new_user_session_path
       end
+
+      it 'can not create answers using ajax' do
+        post :create, answer: attributes_for(:answer), question_id: create(:question), format: :js
+        expect(response.status).to eq 401
+      end
     end
 
     context 'when user is signed in' do
@@ -59,7 +64,7 @@ describe AnswersController do
         expect(response).to redirect_to new_user_session_path
       end
 
-      it 'can not update answers' do
+      it 'can not update answers using ajax' do
         patch :update,
               id: answer,
               question_id: question,
