@@ -40,11 +40,13 @@ feature 'Creating new question', %q{
     end
 
     scenario 'with valid data' do
-      fill_in 'Title', with: 'the title'
-      fill_in 'Body', with: 'the body'
+      fill_in 'Title', with: 'new title'
+      fill_in 'Body', with: 'new body'
       click_on 'Create Question'
 
       expect(page).to have_content "Question successfully created"
+      expect(page).to have_content "new title"
+      expect(page).to have_content "new body"
     end
   end
 end
