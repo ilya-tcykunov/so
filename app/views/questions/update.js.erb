@@ -1,0 +1,5 @@
+<% if @success %>
+    $("[data-question-container]").html('<%= j render partial: 'question', locals: {question: @question} %>');
+<% else %>
+    $('.error-messages', '[data-question-edit-form-for-id="<%= @question.id %>"]').html('<%= j render partial: 'common/error_messages', locals: {model: @question} %>');
+<% end %>

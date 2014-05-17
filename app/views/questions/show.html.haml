@@ -1,6 +1,7 @@
 .col-md-12
-  %h2= @question.title
-  %p= @question.body
+
+  .question_container{data: {question_container: ''}}
+    = render partial: 'question', locals: {question: @question}
 
   %h2
     Answers (

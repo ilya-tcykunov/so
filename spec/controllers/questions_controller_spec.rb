@@ -149,7 +149,7 @@ describe QuestionsController do
 
   describe 'POST #create' do
     context 'when user is not signed in' do
-      it 'can not edit questions' do
+      it 'can not create questions' do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to new_user_session_path
       end
@@ -211,7 +211,7 @@ describe QuestionsController do
       context "when updating another's question" do
         it 'has not access' do
           expect{
-            patch :update, id: anothers_question, question: {}
+            patch :update, id: anothers_question, question: {}, format: :js
           }.to raise_error(CanCan::AccessDenied)
         end
       end
@@ -222,7 +222,7 @@ describe QuestionsController do
           let(:valid_new_body){'sdfyuasbdfvkabdrfvabvk bakjlrblquerbva8745gq8'}
 
           before :each do
-            patch :update, id: his_question, question: {title: valid_new_title, body: valid_new_body}
+            patch :update, id: his_question, question: {title: valid_new_title, body: valid_new_body}, format: :js
           end
 
           it 'has correct @question variable' do
@@ -235,8 +235,8 @@ describe QuestionsController do
             expect(his_question.body).to eq valid_new_body
           end
 
-          it 'redirects to the question' do
-            expect(response).to redirect_to his_question
+          it 'renders update template' do
+            expect(response).to render_template :update
           end
         end
 
@@ -245,7 +245,7 @@ describe QuestionsController do
           let(:invalid_new_body){''}
 
           before :each do
-            patch :update, id: his_question, question: {title: invalid_new_title, body: invalid_new_body}
+            patch :update, id: his_question, question: {title: invalid_new_title, body: invalid_new_body}, format: :js
           end
 
           it 'has correct @question variable' do
@@ -258,8 +258,8 @@ describe QuestionsController do
             expect(his_question.body).not_to eq invalid_new_body
           end
 
-          it 'renders edit template' do
-            expect(response).to render_template(:edit)
+          it 'renders update template' do
+            expect(response).to render_template :update
           end
         end
       end

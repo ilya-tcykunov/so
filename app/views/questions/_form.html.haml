@@ -1,5 +1,6 @@
 = form_for @question, html: {role: 'form', class: 'form-horizontal'} do |f|
-  - error_messages(f.object)
+  .error-messages
+    = render partial: 'common/error_messages', locals: {model: f.object}
 
   .form-group
     = f.label :title
