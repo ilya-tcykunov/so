@@ -4,7 +4,7 @@ Warden.test_mode!
 
 feature 'Editing question', %q{
   In order to make marks in his question
-  As an author of the answer
+  As an author of the question
   I want to be able to use editing mechanisms
 } do
 
@@ -46,7 +46,7 @@ feature 'Editing question', %q{
     expect(page).to have_xpath("//form[@data-question-edit-form-for-id='#{his_question.id}']")
   end
 
-  context 'Authorized user wants to edit his answer'  do
+  context 'Authorized user wants to edit his question'  do
     before :each do
       login_as(user, scope: :user)
       visit question_path(his_question)

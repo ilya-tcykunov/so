@@ -1,6 +1,6 @@
 - question.answers.each do |answer|
-  %div{id: "answer_#{answer.id}"}
-    %p{data: {answer_text_for_id: answer.id}}= answer.body
+  %div{data: {answer: answer.id}}
+    %p{data: {answer_body_for_id: answer.id}}= answer.body
 
     - if can? :edit, answer
       = button_tag 'Edit', type: 'button', data: {answer_edit_button_for_id: answer.id, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
