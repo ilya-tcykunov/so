@@ -1,0 +1,10 @@
+<% if @success %>
+    $('.error-messages', '#new_comment').children().remove();
+    <% if @commentable.class == Question %>
+        $("[data-question-container]").html('<%= j render partial: 'questions/question', locals: {question: @commentable.reload} %>');
+    <% else %>
+        $("[data-answers-container]").html('<%= j render partial: 'questions/answers_list', locals: {question: @commentable.question} %>');
+    <% end %>
+<% else %>
+    $('.error-messages', '[data-comment-form-for-id="<%= new_comments_for_id(@commentable) %>"]').html('<%= j render partial: 'common/error_messages', locals: {model: @comment} %>');
+<% end %>

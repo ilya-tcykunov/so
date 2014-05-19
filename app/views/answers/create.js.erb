@@ -2,7 +2,7 @@
     $('.error-messages', '#new_answer').html('<%= j render partial: 'common/error_messages', locals: {model: @answer} %>');
 <% else %>
     $('.error-messages', '#new_answer').children().remove();
-    $("[data-answers-container]").html('<%= j render partial: 'questions/answer_list', locals: {question: @question} %>');
+    $("[data-answers-container]").html('<%= j render partial: 'questions/answers_list', locals: {question: @question} %>');
     $("[data-answers-count]").html('<%= @question.answers.count %>');
     $('#answer_body', '#new_answer').val('');
 <% end %>

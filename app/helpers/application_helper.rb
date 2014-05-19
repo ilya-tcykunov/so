@@ -11,4 +11,8 @@ module ApplicationHelper
       })
     })
   end
+
+  def new_comments_for_id(commentable)
+    "#{commentable.class.name.underscore}_#{commentable.id}"
+  end
 end

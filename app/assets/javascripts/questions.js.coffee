@@ -5,6 +5,7 @@
 $(->
   initQuestionEditForm()
   initAnswerEditForms()
+  initCommentForms()
 )
 
 initQuestionEditForm = ->
@@ -13,10 +14,10 @@ initQuestionEditForm = ->
 
     if $this.text() == $this.attr('data-edit-value')
       $this.text($this.attr('data-cancel-value'))
-      $this.siblings('form').slideDown('fast')
+      $this.siblings('[data-question-edit-form-for-id]').slideDown('fast')
     else
       $this.text($this.attr('data-edit-value'))
-      $this.siblings('form').slideUp('fast')
+      $this.siblings('[data-question-edit-form-for-id]').slideUp('fast')
   )
 
 
@@ -26,8 +27,20 @@ initAnswerEditForms = ->
 
     if $this.text() == $this.attr('data-edit-value')
       $this.text($this.attr('data-cancel-value'))
-      $this.siblings('form').slideDown('fast')
+      $this.siblings('[data-answer-edit-form-for-id]').slideDown('fast')
     else
       $this.text($this.attr('data-edit-value'))
-      $this.siblings('form').slideUp('fast')
+      $this.siblings('[data-answer-edit-form-for-id]').slideUp('fast')
+  )
+
+initCommentForms = ->
+  $('body').on('click', '[data-comment-new-button-for-id], [data-comment-edit-button-for-id]', (event)->
+    $this = $(this)
+
+    if $this.text() == $this.attr('data-show-text')
+      $this.text($this.attr('data-hide-text'))
+      $this.siblings('[data-comment-form-for-id]').slideDown('fast')
+    else
+      $this.text($this.attr('data-show-text'))
+      $this.siblings('[data-comment-form-for-id]').slideUp('fast')
   )

@@ -1,7 +1,7 @@
 .col-md-12
 
   .question_container{data: {question_container: ''}}
-    = render partial: 'question', locals: {question: @question}
+    = render partial: 'questions/question', locals: {question: @question}
 
   %h2
     Answers (
@@ -9,7 +9,7 @@
     )
 
   .answers-container{data: {answers_container: ''}}
-    = render partial: 'answer_list', locals: {question: @question}
+    = render partial: 'questions/answers_list', locals: {question: @question}
 
   %h2= "Your answer"
   - if can? :new, Answer
