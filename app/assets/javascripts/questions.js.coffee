@@ -34,7 +34,7 @@ initAnswerEditForms = ->
   )
 
 initCommentForms = ->
-  $('body').on('click', '[data-comment-new-button-for-id], [data-comment-edit-button-for-id]', (event)->
+  $('body').on('click', '[data-comment-new-button-for-id]', (event)->
     $this = $(this)
 
     if $this.text() == $this.attr('data-show-text')
@@ -43,4 +43,17 @@ initCommentForms = ->
     else
       $this.text($this.attr('data-show-text'))
       $this.siblings('[data-comment-form-for-id]').slideUp('fast')
+  )
+
+  $('body').on('click', '[data-comment-edit-button-for-id]', (event)->
+    $this = $(this)
+
+    if $this.text() == $this.attr('data-show-text')
+      $this.text($this.attr('data-hide-text'))
+      $this.siblings('[data-comment-body-for-id]').hide()
+      $this.siblings('[data-comment-form-for-id]').show()
+    else
+      $this.text($this.attr('data-show-text'))
+      $this.siblings('[data-comment-form-for-id]').hide()
+      $this.siblings('[data-comment-body-for-id]').show()
   )

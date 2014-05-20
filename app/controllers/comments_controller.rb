@@ -5,9 +5,12 @@ class CommentsController < ApplicationController
   load_and_authorize_resource :comment, through: [:question, :answer]
 
   def create
-    @commentable = @question || @answer
     @comment.user = current_user
     @success = @comment.save
+  end
+
+  def update
+    @success = @comment.update(comment_params)
   end
 
   private

@@ -3,13 +3,6 @@
     %p{data: {comment_body_for_id: comment.id}}= comment.body
 
     - if can? :edit, comment
+      = render partial: 'comments/form', locals: {commentable: commentable, comment: comment}
+
       = button_tag 'Edit', type: 'button', data: {comment_edit_button_for_id: comment.id, show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
-
-      = form_for [commentable, comment], html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {comment_edit_form_for_id: comment.id}}, remote: true do |f|
-        .error-messages
-
-        .form-group
-          = f.text_area :body, class: 'form-control', value: comment.body
-
-        .form-group
-          = f.submit class: 'btn btn-primary'

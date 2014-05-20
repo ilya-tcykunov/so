@@ -5,5 +5,5 @@
         $("[data-answers-container]").html('<%= j render partial: 'questions/answers_list', locals: {question: @answer.question} %>');
     <% end %>
 <% else %>
-    $('.error-messages', '[data-comment-form-for-id="<%= new_comments_for_id(@comment.commentable) %>"]').html('<%= j render partial: 'common/error_messages', locals: {model: @comment} %>');
+    $('.error-messages', '[data-comment-form-for-id="<%= @comment.id %>"]').html('<%= j render partial: 'common/error_messages', locals: {model: @comment} %>');
 <% end %>
