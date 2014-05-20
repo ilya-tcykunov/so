@@ -1,8 +1,11 @@
 - commentable.comments.each do |comment|
-  %div{data: {comment: comment.id}}
-    %p{data: {comment_body_for_id: comment.id}}= comment.body
+  %div.row.comment{data: {comment: comment.id}}
+    .vote.col-md-1
 
-    - if can? :edit, comment
-      = render partial: 'comments/form', locals: {commentable: commentable, comment: comment}
+    .col-md-11
+      %p{data: {comment_body_for_id: comment.id}}= comment.body
 
-      = button_tag 'Edit', type: 'button', data: {comment_edit_button_for_id: comment.id, show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
+      - if can? :edit, comment
+        = render partial: 'comments/form', locals: {commentable: commentable, comment: comment}
+
+        = button_tag 'Edit', type: 'button', data: {comment_edit_button_for_id: comment.id, show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
