@@ -10,7 +10,7 @@ feature 'Create comment', %q{
   given(:question){create(:question)}
   given!(:answer){create(:answer, question: question)}
 
-  scenario 'Unauthorized user wants to create answer' do
+  scenario 'Unauthorized user wants to create comment' do
     visit question_path(question)
     expect(page).not_to have_selector('new_comment')
     expect(page).not_to have_selector('[data-comment-new-button]')
