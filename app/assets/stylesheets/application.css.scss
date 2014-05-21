@@ -14,12 +14,23 @@
  *= require_self
  */
 
+.question {
+  border-top: 1px solid #000000;
+  padding-top: 10px;
+}
+
 .answer {
-  border-top: 1px solid #AAA;
+  border-top: 1px solid #000000;
+  padding-top: 10px;
+}
+
+.comments-container {
+  border-top: 1px dotted darkgray;
+  margin-top: 10px;
 }
 
 .comment {
-  border-top: 1px dotted #AAA;
+  border-bottom: 1px dotted #d3d3d3;
   font-size: 90%;
   color: #555;
   padding: 5px;

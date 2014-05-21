@@ -1,8 +1,9 @@
+%h2{data: {question_title_for_id: question.id}}= question.title
+
 %div.row.question{data: {question: question.id}}
   .vote.col-md-1
 
   .col-md-11
-    %h2{data: {question_title_for_id: question.id}}= question.title
     %p{data: {question_body_for_id: question.id}}= question.body
 
     - if can? :edit, question
