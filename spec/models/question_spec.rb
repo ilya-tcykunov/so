@@ -8,4 +8,5 @@ describe Question do
   it { should have_many :answers }
   it { should have_many :comments }
   it { should have_many :attachments }
+  it { should accept_nested_attributes_for :attachments }
 end
