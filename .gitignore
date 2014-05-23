@@ -33,3 +33,5 @@ nbproject
 
 .ruby-version
 .ruby-gemset
+
+/public/uploads
