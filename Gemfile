@@ -50,3 +50,4 @@ end
 
 gem 'devise'
 gem 'cancancan', '~>1.7'
+gem 'carrierwave'
