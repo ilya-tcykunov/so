@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 RSpec.configure do |config|
+  config.include Warden::Test::Helpers
+  config.before(:suite) do
+    Warden.test_mode!
+  end
+
   Capybara.javascript_driver = :webkit
 
   config.use_transactional_fixtures = false

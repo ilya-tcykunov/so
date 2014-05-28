@@ -51,3 +51,5 @@ end
 gem 'devise'
 gem 'cancancan', '~>1.7'
 gem 'carrierwave'
+gem 'remotipart'
+gem 'nested_form'

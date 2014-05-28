@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @question.attachments.build
   end
 
   def edit
@@ -34,6 +35,6 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
   end
 end

@@ -1,4 +1,4 @@
-= form_for @question, html: {role: 'form', class: 'form-horizontal'} do |f|
+= nested_form_for @question, html: {role: 'form', class: 'form-horizontal'} do |f|
   .error-messages
     = render partial: 'common/error_messages', locals: {model: f.object}
 
@@ -9,6 +9,9 @@
   .form-group
     = f.label :body
     = f.text_area :body, class: 'form-control'
+
+  .form-group
+    = render partial: 'attachments/form_list', locals: {form: f}
 
   .form-group
     = f.submit class: 'btn btn-default btn-sm'

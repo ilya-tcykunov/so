@@ -4,7 +4,11 @@
   .vote.col-md-1
 
   .col-md-11
-    %p{data: {question_body_for_id: question.id}}= question.body
+    %div{data: {question_readonly_content_for_id: question.id}}
+      %p{data: {question_body_for_id: question.id}}= question.body
+
+      - question.attachments.each do |attachment|
+        %p= link_to attachment.file.identifier, attachment.file.url
 
     - if can? :edit, question
       = button_tag 'Edit', type: 'button', data: {question_edit_button_for_id: question.id, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
@@ -13,7 +17,7 @@
       = button_tag 'Comment', type: 'button', data: {comment_new_button_for_id: new_comments_for_id(question), show_text: 'Comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
 
     - if can? :edit, question
-      = form_for question, html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {question_edit_form_for_id: question.id} }, remote: true do |f|
+      = nested_form_for question, html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {question_edit_form_for_id: question.id} }, remote: true do |f|
         .error-messages
           = render partial: 'common/error_messages', locals: {model: f.object}
 
@@ -24,6 +28,9 @@
         .form-group
           = f.label :body
           = f.text_area :body, class: 'form-control'
+
+        .form-group
+          = render partial: 'attachments/form_list', locals: {form: f}
 
         .form-group
           = f.submit class: 'btn btn-primary btn-sm'

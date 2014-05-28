@@ -3,5 +3,5 @@ class Attachment < ActiveRecord::Base
 
   mount_uploader :file, FileUploader
 
-  validates :attachmentable, presence: true
+  #validates :attachmentable, presence: true
 end
