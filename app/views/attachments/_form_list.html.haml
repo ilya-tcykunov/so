@@ -1,20 +1,9 @@
--#= form.fields_for :attachments, form.object.attachments do |attachment|
--#  = attachment.link_to_remove '', class: bootstrap_icon_class('times')
--#  = link_to attachment.file.identifier, attachment.file.url
-
--#- form.object.attachments.each do |attachment|
--#  %p
--#    %input{id: "question_attachments_attributes_#{attachment.id}__destroy",
--#    name: "question[attachments_attributes][#{attachment.id}][_destroy]",
--#    value: "false",
--#    type: "hidden",
--#    data: {attachment_destroy_parameter_for_id: attachment.id}}
--#    = link_to '', '#', class: bootstrap_icon_class('times'), data: {attachment_remove_button_for_id: attachment.id}
--#    = link_to attachment.file.identifier, attachment.file.url
-
 .attachments-container
-  = form.link_to_add "Add more files", :attachments, :data => { :target => ".attachments-container" }
+  = form.link_to_add "Add more files", :attachments, model_object: Attachment.new, :data => { :target => ".attachments-container" }
   = form.fields_for :attachments do |attachment|
     .attachment
       = attachment.link_to_remove '', class: bootstrap_icon_class('times')
-      = attachment.file_field :file
+      - if attachment.object.new_record?
+        = attachment.file_field :file
+      - else
+        = link_to attachment.object.file.file.identifier, attachment.object.file.url

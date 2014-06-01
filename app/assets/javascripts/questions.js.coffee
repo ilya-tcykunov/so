@@ -20,6 +20,15 @@ initQuestionEditForm = ->
       $this.siblings('[data-question-edit-form-for-id]').slideUp('fast')
   )
 
+  $('[data-question-container]').on('ajax:success', '[data-question-edit-form-for-id]', (event, data, status, xhr)->
+    question = $.parseJSON(xhr.responseText).question
+    $('.question_container').html(question)
+  )
+
+  $('[data-question-container]').on('ajax:error', '[data-question-edit-form-for-id]', (event, xhr, status, error)->
+    errors = $.parseJSON(xhr.responseText).errors
+    $(this).find('.error-messages').html(errors)
+  )
 
 initAnswerEditForms = ->
   $('[data-answers-container]').on('click', '[data-answer-edit-button-for-id]', (event)->

@@ -29,7 +29,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @success = @question.update(question_params)
+    respond_to do |format|
+      if @question.update(question_params)
+        question = render_to_string(partial: 'question', locals: { question: @question }, layout: false)
+        format.json { render json: { question: question } }
+      else
+        errors = render_to_string(partial: 'common/error_messages', locals: { model: @question }, layout: false)
+        format.json { render json: { errors: errors }, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   private

@@ -8,7 +8,7 @@
       %p{data: {question_body_for_id: question.id}}= question.body
 
       - question.attachments.each do |attachment|
-        %p= link_to attachment.file.identifier, attachment.file.url
+        %p= link_to attachment.file.file.identifier, attachment.file.url
 
     - if can? :edit, question
       = button_tag 'Edit', type: 'button', data: {question_edit_button_for_id: question.id, edit_value: 'Edit', cancel_value: 'Cancel'}, class: 'btn btn-default btn-xs'
@@ -17,7 +17,7 @@
       = button_tag 'Comment', type: 'button', data: {comment_new_button_for_id: new_comments_for_id(question), show_text: 'Comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
 
     - if can? :edit, question
-      = nested_form_for question, html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {question_edit_form_for_id: question.id} }, remote: true do |f|
+      = nested_form_for question, html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {question_edit_form_for_id: question.id, type: :json} }, remote: true do |f|
         .error-messages
           = render partial: 'common/error_messages', locals: {model: f.object}
 
