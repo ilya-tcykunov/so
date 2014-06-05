@@ -211,7 +211,7 @@ describe QuestionsController do
       context "when updating another's question" do
         it 'has not access' do
           expect{
-            patch :update, id: anothers_question, question: {}, format: :js
+            patch :update, id: anothers_question, question: {}, format: :json
           }.to raise_error(CanCan::AccessDenied)
         end
       end
@@ -222,7 +222,7 @@ describe QuestionsController do
           let(:valid_new_body){'sdfyuasbdfvkabdrfvabvk bakjlrblquerbva8745gq8'}
 
           before :each do
-            patch :update, id: his_question, question: {title: valid_new_title, body: valid_new_body}, format: :js
+            patch :update, id: his_question, question: {title: valid_new_title, body: valid_new_body}, format: :json
           end
 
           it 'has correct @question variable' do
@@ -234,10 +234,6 @@ describe QuestionsController do
             expect(his_question.title).to eq valid_new_title
             expect(his_question.body).to eq valid_new_body
           end
-
-          it 'renders update template' do
-            expect(response).to render_template :update
-          end
         end
 
         context 'with invalid data' do
@@ -245,7 +241,7 @@ describe QuestionsController do
           let(:invalid_new_body){''}
 
           before :each do
-            patch :update, id: his_question, question: {title: invalid_new_title, body: invalid_new_body}, format: :js
+            patch :update, id: his_question, question: {title: invalid_new_title, body: invalid_new_body}, format: :json
           end
 
           it 'has correct @question variable' do
@@ -256,10 +252,6 @@ describe QuestionsController do
             his_question.reload
             expect(his_question.title).not_to eq invalid_new_title
             expect(his_question.body).not_to eq invalid_new_body
-          end
-
-          it 'renders update template' do
-            expect(response).to render_template :update
           end
         end
       end
