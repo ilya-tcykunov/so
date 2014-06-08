@@ -1,32 +1,3 @@
 .row
-  .col-md-8.col-md-offset-2
-    .row
-      .question_container.col-md-12{data: {question_container: ''}}
-        = render partial: 'questions/question', locals: {question: @question}
-
-    .row
-      .col-md-12
-        %h2
-          Answers (
-          %span{data: {answers_count: ''}}= @question.answers.count
-          )
-
-    .row
-      .answers-container.col-md-12{data: {answers_container: ''}}
-        = render partial: 'questions/answers_list', locals: {question: @question}
-
-    .row
-      .col-md-12
-        %h2= "Your answer"
-        - if can? :new, Answer
-          = form_for [@question, @answer], html: {role: 'form', class: 'form-horizontal'}, remote: true do |f|
-            .error-messages
-
-            .form-group
-              = f.text_area :body, class: 'form-control'
-
-            .form-group
-              = f.submit class: 'btn btn-primary'
-        - else
-          %p
-            = link_to 'You should sign in to answer', new_user_session_path
+  .col-md-8.col-md-offset-2.full-question-container{data: {full_question_container: @question.id}}
+    = render partial: 'questions/full_question', locals: {question: @question, answer: @answer}

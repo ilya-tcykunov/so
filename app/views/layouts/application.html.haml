@@ -14,7 +14,7 @@
     = stylesheet_link_tag    'application', :media => 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
-  %body
+  %body{data: {user_id: current_user.try(:id)}}
     .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
       .container-fluid
         .navbar-header
