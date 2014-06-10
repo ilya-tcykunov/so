@@ -1,0 +1,5 @@
+.row.comment{data: {comment: comment.id}}
+  .vote.col-md-1
+
+  .col-md-11
+    = render partial: 'comments/readonly_content', locals: {comment: comment}

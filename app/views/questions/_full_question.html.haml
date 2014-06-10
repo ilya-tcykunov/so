@@ -1,15 +1,18 @@
 .row
   .col-md-12.question-container{data: {question_container: question.id}}
-    = render partial: 'questions/question', locals: {question: question}
-    .row.comments-container{data: {comments_container: ''}}
+    - if can? :edit, question
+      = render partial: 'questions/editable_question', locals: {question: question}
+    - else
+      = render partial: 'questions/readonly_question', locals: {question: question}
+    .row.comments-container{data: {comments_container: '', commentable_type: 'question', }}
       .col-md-11.col-md-offset-1
         - if can? :new, Comment
-          = button_tag 'Comment', type: 'button', data: {comment_new_button_for_id: new_comments_for_id(question), show_text: 'Comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
+          = button_tag 'Comment', type: 'button', data: {new_comment_button: '', show_text: 'Comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
 
-        - if can? :new, Comment
-          = render partial: 'comments/form', locals: {commentable: question, comment: Comment.new}
+          %div{data: {new_comment: ''}, style: 'display:none;'}
+            = render partial: 'comments/form', locals: {comment: question.comments.build}
 
-        = render partial: 'questions/comments_list', locals: {commentable: question}
+        = render partial: 'comments/comments_list', locals: {commentable: question}
 
 .row
   .col-md-12
@@ -20,7 +23,7 @@
 
 .row
   .answers-container.col-md-12{data: {answers_container: ''}}
-    = render partial: 'questions/answers_list', locals: {question: question}
+    = render partial: 'answers/answers_list', locals: {question: question}
 
 .row
   .col-md-12
@@ -38,4 +41,7 @@
       %p
         = link_to 'You should sign in to answer', new_user_session_path
 
-= subscribe_to "/questions/#{question.id}"
+- if current_user.try(:admin)
+  = subscribe_to "/admin/questions/#{question.id}"
+- else
+  = subscribe_to "/questions/#{question.id}"

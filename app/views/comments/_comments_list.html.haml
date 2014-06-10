@@ -1,0 +1,7 @@
+%div{data: {comments_list: ''}}
+  - commentable.comments.each do |comment|
+    - unless comment.new_record?
+      - if can? :edit, comment
+        = render partial: 'comments/editable_comment', locals: {comment: comment}
+      - else
+        = render partial: 'comments/readonly_comment', locals: {comment: comment}

@@ -11,23 +11,22 @@ $(->
 
   initQuestionEditForm()
   initAnswerEditForms()
-  initCommentForms()
   initCometProcessing()
 )
 
 initQuestionEditForm = ->
-  $('[data-full-question-container]').on('click', '[data-edit-button]', (event)->
+  $('[data-full-question-container]').on('click', '[data-edit-question-button]', (event)->
     $this = $(this)
     $question = $this.closest('[data-question]')
     $readonly_content = $('[data-readonly-content]', $question)
     $editable_content = $('[data-editable-content]', $question)
 
-    if $this.text() == $this.attr('data-edit-value')
-      $this.text($this.attr('data-cancel-value'))
+    if $this.text() == $this.attr('data-show-text')
+      $this.text($this.attr('data-hide-text'))
       $readonly_content.hide()
       $editable_content.show()
     else
-      $this.text($this.attr('data-edit-value'))
+      $this.text($this.attr('data-show-text'))
       $editable_content.hide()
       $readonly_content.show()
   )
@@ -39,7 +38,7 @@ initQuestionEditForm = ->
 
   $('[data-full-question-container]').on('ajax:error', '[data-question]', (event, xhr, status, error)->
     errors = $.parseJSON(xhr.responseText).html
-    $(event.currentTarget).find('.error-messages').replaceWith(errors)
+    $(event.currentTarget).find('.error-messages').html(errors)
   )
 
 initAnswerEditForms = ->
@@ -54,60 +53,34 @@ initAnswerEditForms = ->
       $this.siblings('[data-answer-edit-form-for-id]').slideUp('fast')
   )
 
-initCommentForms = ->
-  $('[data-question-container], [data-answers-container]').on('click', '[data-comment-new-button-for-id]', (event)->
-    $this = $(this)
-
-    if $this.text() == $this.attr('data-show-text')
-      $this.text($this.attr('data-hide-text'))
-      $this.siblings('[data-comment-form-for-id]').slideDown('fast')
-    else
-      $this.text($this.attr('data-show-text'))
-      $this.siblings('[data-comment-form-for-id]').slideUp('fast')
-  )
-
-  $('[data-question-container], [data-answers-container]').on('click', '[data-comment-edit-button-for-id]', (event)->
-    $this = $(this)
-
-    if $this.text() == $this.attr('data-show-text')
-      $this.text($this.attr('data-hide-text'))
-      $this.siblings('[data-comment-body-for-id]').hide()
-      $this.siblings('[data-comment-form-for-id]').show()
-    else
-      $this.text($this.attr('data-show-text'))
-      $this.siblings('[data-comment-form-for-id]').hide()
-      $this.siblings('[data-comment-body-for-id]').show()
-  )
-
 initCometProcessing = ->
-  #{type, id, commentable_type, commentable_id, user_id, action}
-  PrivatePub.subscribe "/questions/" + questionId, (message, channel) ->
-    data = message.data
-    `if(data.user_id == userId) {
+  PrivatePub.subscribe "/questions/" + questionId, privatePubHandler
+  PrivatePub.subscribe "/admin/questions/" + questionId, privatePubHandler
+
+privatePubHandler = (message, channel) ->
+  data = message.data
+  `if(data.user_id == userId) {
       return
     }`
-    if data.type == 'question'
-      $question = $('[data-question="' + data.id + '"]')
-      if $('[data-editable-content]', $question).size() > 0
-        $question.replaceWith(data.html.question)
-      else
-        $('[data-readonly-content]', $question).replaceWith(data.html.readonly_content)
-      return
 
-    if data.type == 'answer'
-      if data.action == 'update'
-        $('[data-answer="' + data.id + '"]').replaceWith(data.html)
-      else # create
-        $('[data-answers-container]').append(data.html)
+  if data.type == 'question'
+    $('[data-question="' + data.id + '"]').replaceWith(data.html)
 
-    if data.type == 'comment'
-      if data.action == 'update'
-        $('[data-comment="' + data.id + '"]').replaceWith(data.html)
-      else
-        $commentable = $('[data-' + data.commentable_type + '="' + data.commentable_id + '"]')
-        $('[data-comments-contanier]', $commentable).append(data.html)
+  if data.type == 'answer'
+    if data.action == 'update'
+      $('[data-answer="' + data.id + '"]').replaceWith(data.html)
+    else # create
+      $('[data-answers-container]').append(data.html)
 
-alerCometParams = ->
+  if data.type == 'comment'
+    if data.action == 'update'
+      $('[data-comment="' + data.id + '"]').replaceWith(data.html)
+    else
+      $commentable = $('[data-' + data.commentable_type + '="' + data.commentable_id + '"]')
+      $container = $commentable.closest('[data-' + data.commentable_type + '-container]')
+      $('[data-comments-list]', $container).append(data.html)
+
+alertCometParams = (data) ->
   alert('type: ' + data.type +
         ', id: ' + data.id +
         ', commentable_type: ' + data.commentable_type +

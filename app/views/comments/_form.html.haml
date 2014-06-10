@@ -1,8 +1,9 @@
-= form_for [commentable, comment], html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {comment_form_for_id: (comment.id.present? ? comment.id : new_comments_for_id(commentable))}}, remote: true do |f|
+/= form_for [commentable, comment], html: {role: 'form', class: 'form-horizontal', style: 'display:none;', data: {comment_form_for_id: (comment.id.present? ? comment.id : new_comments_for_id(commentable))}}, remote: true do |f|
+= form_for [comment.commentable, comment], html: {role: 'form', class: 'form-horizontal', data: {type: :json}}, remote: true do |f|
   .error-messages
 
   .form-group
-    = f.text_area :body, class: 'form-control', value: comment.body
+    = f.text_area :body, class: 'form-control', data: {body: ''}, value: comment.body
 
   .form-group
     = f.submit class: 'btn btn-primary btn-sm'

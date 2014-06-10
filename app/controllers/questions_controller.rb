@@ -33,17 +33,17 @@
   def update
     respond_to do |format|
       if @question.update(question_params)
-        question = render_to_string(partial: 'questions/question', locals: { question: @question }, layout: false)
-        readonly_content = render_to_string(partial: 'questions/readonly_content', locals: { question: @question }, layout: false)
-        PrivatePub.publish_to("/questions/#{@question.id}",
-                              data: {type: 'question',
-                                     id: @question.id,
-                                     user_id: current_user.id,
-                                     action: 'update',
-                                     html: {
-                                         question: question,
-                                         readonly_content: readonly_content
-                                     }})
+        question = render_to_string(partial: 'questions/editable_question', locals: { question: @question }, layout: false)
+        data = {type: 'question',
+                id: @question.id,
+                user_id: current_user.id,
+                action: 'update',
+                html: question}
+        PrivatePub.publish_to("/admin/questions/#{@question.id}", data: data)
+
+        data[:html] = render_to_string(partial: 'questions/readonly_question', locals: { question: @question }, layout: false)
+        PrivatePub.publish_to("/questions/#{@question.id}", data: data)
+
         format.json { render json: { html: question } }
       else
         errors = render_to_string(partial: 'common/error_messages', locals: { model: @question }, layout: false)

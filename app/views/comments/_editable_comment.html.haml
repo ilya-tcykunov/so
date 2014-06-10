@@ -1,0 +1,7 @@
+.row.comment{data: {comment: comment.id}}
+  .vote.col-md-1
+
+  .col-md-11
+    = render partial: 'comments/readonly_content', locals: {comment: comment}
+    = render partial: 'comments/editable_content', locals: {comment: comment}
+    = button_tag 'Edit', type: 'button', data: {edit_comment_button: '', show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
