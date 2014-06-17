@@ -33,7 +33,7 @@ initCommentForms = ->
 
   # Creating
 
-  $('[data-comments-container]').on('click', '[data-new-comment-button]', (event)->
+  $('[data-full-question-container]').on('click', '[data-new-comment-button]', (event)->
     $this = $(this)
     $container = $this.closest('[data-comments-container]')
     $new_comment_block = $('[data-new-comment]', $container)

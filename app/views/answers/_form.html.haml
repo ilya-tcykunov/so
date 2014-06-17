@@ -1,0 +1,11 @@
+= form_for [answer.question, answer], html: {role: 'form', class: 'form-horizontal', data: {type: :json}}, remote: true do |f|
+  .error-messages
+
+  .form-group
+    = f.text_area :body, class: 'form-control', value: answer.body, data: {body: ''}
+
+  .form-group
+    - if answer.new_record?
+      = f.submit class: 'btn btn-primary'
+    - else
+      = f.submit class: 'btn btn-primary btn-sm'

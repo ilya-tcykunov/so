@@ -1,0 +1,7 @@
+.row.answer{data: {answer: answer.id}}
+  .vote.col-md-1
+
+  .col-md-11
+    = render partial: 'answers/readonly_content', locals: {answer: answer}
+    = render partial: 'answers/editable_content', locals: {answer: answer}
+    = button_tag 'Edit', type: 'button', data: {edit_answer_button: '', show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'

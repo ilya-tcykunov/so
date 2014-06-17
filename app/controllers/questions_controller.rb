@@ -9,7 +9,8 @@
 
   def show
     if can? :new, Answer
-      @answer = Answer.new
+      #@answer = Answer.new
+      @answer = @question.answers.build
     end
   end
 
@@ -34,12 +35,16 @@
     respond_to do |format|
       if @question.update(question_params)
         question = render_to_string(partial: 'questions/editable_question', locals: { question: @question }, layout: false)
-        data = {type: 'question',
-                id: @question.id,
-                user_id: current_user.id,
+        data = {chunk_type: 'question',
+                chunk_id: @question.id,
+                chunk_author_id: @question.user.id,
+                actor_id: current_user.id,
                 action: 'update',
                 html: question}
         PrivatePub.publish_to("/admin/questions/#{@question.id}", data: data)
+        if current_user != @question.user
+          PrivatePub.publish_to("/chunk_author/questions/#{@question.id}", data: data)
+        end
 
         data[:html] = render_to_string(partial: 'questions/readonly_question', locals: { question: @question }, layout: false)
         PrivatePub.publish_to("/questions/#{@question.id}", data: data)
