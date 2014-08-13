@@ -40,11 +40,12 @@ class Ability
     end
 
     # Ordinary user
-    can [:index, :show, :new, :create], Question
+    can [:index, :show, :new, :create, :vote], Question
     can [:edit, :update], Question, user_id: user.id
-    can [:new, :create], Answer
+    can [:new, :create, :vote], Answer
     can [:edit, :update], Answer, user_id: user.id
     can [:new, :create], Comment
     can [:edit, :update], Comment, user_id: user.id
+    can [:create], Voting
   end
 end

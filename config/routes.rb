@@ -11,5 +11,9 @@ Rails.application.routes.draw do
 
   resources :questions, :answers, concerns: :commentable
 
+  resources :votings, only: :create
+  # post 'votings/up', to: 'votings#up', as: :votings_up
+  # post 'votings/down', to: 'votings#down', as: :votings_down
+
   root 'questions#index'
 end

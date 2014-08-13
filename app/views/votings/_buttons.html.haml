@@ -1,0 +1,11 @@
+.voting{data: {voting: ''}}
+  - if can? :vote, votable
+    %a.button.up-button{data: {votable_button: '', url: votings_url, votable_id_name: "#{votable.class.name.underscore}_id", votable_id: votable.id, votable_opinion: 'up'}, class: (votable.opinion_of(current_user) == 1 ? 'disabled' : '')}
+      = bootstrap_icon('thumbs-o-up')
+
+  .common-opinion{data: {common_opinion: ''}}
+    = votable.common_opinion
+
+  - if can? :vote, votable
+    %a.button.down-button{data: {votable_button: '', url: votings_url, votable_id_name: "#{votable.class.name.underscore}_id", votable_id: votable.id, votable_opinion: 'down'}, class: (votable.opinion_of(current_user) == -1 ? 'disabled' : '')}
+      = bootstrap_icon('thumbs-o-down')

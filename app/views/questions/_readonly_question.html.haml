@@ -1,5 +1,6 @@
 .row.question{data: {question: question.id}}
-  .vote.col-md-1
+  .col-md-1
+    = render partial: 'votings/buttons', locals: {votable: question}
 
   .col-md-11
     = render partial: 'questions/readonly_content', locals: {question: question}

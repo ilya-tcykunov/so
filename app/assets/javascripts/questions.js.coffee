@@ -51,6 +51,7 @@ initCometProcessing = ->
 
 privatePubHandler = (message, channel) ->
   data = message.data
+  # actors get data in ajax response
   `if(data.actor_id == userId) {
     return;
   };`
@@ -72,11 +73,17 @@ privatePubHandler = (message, channel) ->
       $container = $commentable.closest('[data-' + data.commentable_type + '-container]')
       $('[data-comments-list]', $container).append(data.html)
 
+  if data.chunk_type == 'voting'
+    $votable = $('[data-' + data.votable_type + '="' + data.votable_id + '"]')
+    $('[data-common-opinion]', $votable).html(data.html)
+
 alertCometParams = (data) ->
   alert('chunk_type: ' + data.chunk_type +
         ', chunk_id: ' + data.chunk_id +
         ', chunk_author_id: ' + data.chunk_author_id +
         ', commentable_type: ' + data.commentable_type +
         ', commentable_id: ' + data.commentable_id +
+        ', votable_type: ' + data.votable_type +
+        ', votable_id: ' + data.votable_id +
         ', actor_id: ' + data.actor_id +
         ', action: ' + data.action)

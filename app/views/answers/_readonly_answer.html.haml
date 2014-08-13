@@ -1,5 +1,6 @@
 .row.answer{data: {answer: answer.id}}
-  .vote.col-md-1
+  .col-md-1
+    = render partial: 'votings/buttons', locals: {votable: answer}
 
   .col-md-11
     = render partial: 'answers/readonly_content', locals: {answer: answer}

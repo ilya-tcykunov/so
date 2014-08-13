@@ -1,0 +1,9 @@
+.voting {
+  .button.disabled {
+    pointer-events: none;
+    color: grey;
+  }
+  .button:not(.disabled):hover {
+    cursor: pointer;
+  }
+}
