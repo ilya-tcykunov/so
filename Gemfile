@@ -57,3 +57,9 @@ gem 'private_pub'
 gem 'thin'
 gem 'omniauth'
 gem 'omniauth-facebook'
+
+# heroku
+group :production do
+  gem 'rails_12factor'
+end
+ruby "2.1.1"
