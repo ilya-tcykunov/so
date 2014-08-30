@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
     user.authorizations.create(provider: auth.provider, uid: auth.uid)
     user
   end
+
+  def reputation
+    Voting.where(votable_type: [Question.name, Answer.name]).where("#{Voting.quoted_table_name}.\"votable_id\" IN (#{Answer.where(user: self).select(:id).to_sql}) OR #{Voting.quoted_table_name}.\"votable_id\" IN (#{Question.where(user: self).select(:id).to_sql})").sum(:opinion)
+  end
 end

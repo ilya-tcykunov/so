@@ -69,4 +69,24 @@ describe User do
       end
     end
   end
+
+  describe '#reputation' do
+    let(:user) { create(:user) }
+    let(:answer) { create(:answer, user: user) }
+    let(:question) { create(:question, user: user) }
+
+    before(:each) do
+      create_list(:negative_voting, 3, votable: answer)
+      create_list(:positive_voting, 2, votable: answer)
+
+      create_list(:negative_voting, 20, votable: question)
+      create_list(:positive_voting, 30, votable: question)
+
+      create_list(:positive_voting, 5, votable: create(:question))
+    end
+
+    it 'should take into account questions and answers' do
+      expect(user.reputation).to eq(9)
+    end
+  end
 end
