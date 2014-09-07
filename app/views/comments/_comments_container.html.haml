@@ -1,7 +1,7 @@
 .row.comments-container{data: {comments_container: '', commentable_type: commentable.class.name.underscore }}
   .col-md-11.col-md-offset-1
     - if can? :new, Comment
-      = button_tag 'Comment', type: 'button', data: {new_comment_button: '', show_text: 'Comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'
+      = button_tag 'Add comment', type: 'button', data: {new_comment_button: '', show_text: 'Add comment', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs new-comment-button'
 
       %div{data: {new_comment: ''}, style: 'display:none;'}
         = render partial: 'comments/form', locals: {comment: commentable.comments.build}

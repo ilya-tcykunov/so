@@ -16,24 +16,54 @@
  */
 
 .question {
-  border-top: 1px solid #000000;
   padding-top: 10px;
+}
+
+.question-title {
+  margin-top: 0px;
+}
+
+.edit-question-button {
+  margin-top: 10px;
+  position: absolute;
+  left: 21px;
 }
 
 .answer {
   border-top: 1px solid #000000;
   padding-top: 10px;
-}
-
-.comments-container {
-  border-top: 1px dotted darkgray;
   margin-top: 10px;
 }
 
+.edit-answer-button {
+  margin-top: 10px;
+  position: absolute;
+  left: 21px;
+}
+
+.comments-container {
+}
+
 .comment {
-  border-bottom: 1px dotted #d3d3d3;
+  background-color: #fafafa;
+  border-top: 1px dotted #d3d3d3;
   font-size: 90%;
-  color: #555;
-  padding: 5px;
-  margin-top: 5px;
+  color: #555555;
+}
+
+.new-comment-button {
+  margin: 10px 0px;
+}
+
+.edit-comment-button {
+  margin: 3px 0px;
+}
+
+.voting {
+  .up-button, .down-button, .common-opinion {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
 }

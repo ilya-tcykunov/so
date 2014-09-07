@@ -1,8 +1,8 @@
 .row.question{data: {question: question.id}}
   .col-md-1
     = render partial: 'votings/buttons', locals: {votable: question}
+    = button_tag 'Edit', type: 'button', data: {edit_question_button: '', show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs edit-question-button'
 
   .col-md-11
     = render partial: 'questions/readonly_content', locals: {question: question}
     = render partial: 'questions/editable_content', locals: {question: question}
-    = button_tag 'Edit', type: 'button', data: {edit_question_button: '', show_text: 'Edit', hide_text: 'Cancel'}, class: 'btn btn-default btn-xs'

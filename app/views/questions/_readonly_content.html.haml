@@ -1,5 +1,5 @@
 %div{data: {readonly_content: ''}}
-  %h2{data: {title: ''}}= question.title
-  %p{data: {body: ''}}= question.body
+  %h2.question-title{data: {title: ''}}= question.title
+  %p.question-body{data: {body: ''}}= question.body
   - question.attachments.each do |attachment|
     %p= link_to attachment.file.file.identifier, attachment.file.url
