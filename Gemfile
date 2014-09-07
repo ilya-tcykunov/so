@@ -57,6 +57,7 @@ gem 'private_pub'
 gem 'thin'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'doorkeeper'
 
 # heroku
 group :production do
